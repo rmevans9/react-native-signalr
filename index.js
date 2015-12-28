@@ -20,7 +20,7 @@ module.exports = {
     }
     window.console.debug = logger;
   },
-  hubConnection : (serverUrl) => {
+  hubConnection : (serverUrl, headers) => {
     if(!signalRHubConenctionFunc){
         require('ms-signalr-client');
         signalRHubConenctionFunc = window.jQuery.hubConnection;
@@ -28,7 +28,7 @@ module.exports = {
     const protocol = serverUrl.split('//')[0];
     const host = serverUrl.split('//')[1];
     window.location = {
-      protocol : protocol, 
+      protocol : protocol,
       host : host
     };
     window.document = {
@@ -39,6 +39,9 @@ module.exports = {
               }
            }
     };
+
+    window.jQuery.defaultAjaxHeaders = headers;
+
     return signalRHubConenctionFunc(serverUrl);
   }
-};  
+};
